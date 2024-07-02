@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #log-container {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #playPauseButton {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+    <title>Log Viewer</title>
+</head>
+<body>
+    <div id="log-container"></div>
+    <button id="playPauseButton">Play</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const logContainer = document.getElementById('log-container');
+            const playPauseButton = document.getElementById('playPauseButton');
+
+            let autoScroll = true;
+            let isPlaying = true;
+
+            const socket = new WebSocket('ws://localhost:8765');
+
+            playPauseButton.addEventListener('click', function () {
+                isPlaying = !isPlaying;
+                playPauseButton.textContent = isPlaying ? 'Pause' : 'Play';
+            });
+
+            logContainer.addEventListener('scroll', function () {
+                autoScroll = logContainer.scrollHeight - logContainer.scrollTop === logContainer.clientHeight;
+            });
+
+            socket.addEventListener('message', function (event) {
+                const logMessage = event.data;
+
+                if (isPlaying) {
+                    const logElement = document.createElement('p');
+                    logElement.textContent = logMessage;
+                    logContainer.appendChild(logElement);
+                }
+
+                if (autoScroll) {
+                    logContainer.scrollTop = logContainer.scrollHeight;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
