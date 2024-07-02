@@ -1,0 +1,7 @@
+//Figure out the request which took the longest time and print to console:
+
+grep "Completed" ./tmp_more_than_50\ \(1\) | sort -k5,5nr | head -1
+
+//Figure out unique endpoints and the number of times each endpoint was hit 
+
+grep "Started" ./tmp_more_than_50\ \(1\) | cut -d'"' -f2 | cut -d'?' -f1 | sort | uniq -c
