@@ -29,6 +29,7 @@ class Player
         if turn_score >= 300 || @in_game
           @in_game = true
         else
+          puts "#{name} rolled #{dice_set.values} but total score this turn is less than 300. Turn over."
           return 0
         end
 

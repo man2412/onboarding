@@ -38,20 +38,6 @@ class Game
     declare_winner
   end
 
-  def final_turns
-    @final_round_players.each do |player|
-      puts "#{player.name}'s final turn"
-      turn_score = player.take_turn
-
-      if turn_score > 0
-        player.score += turn_score
-        puts "#{player.name} scored #{turn_score} points this turn. Total score: #{player.score}"
-      else
-        puts "#{player.name} scored 0 points and lost their turn."
-      end
-    end
-  end
-
   def declare_winner
     winner = @players.max_by(&:score)
     puts "The winner is #{winner.name} with #{winner.score} points!"

@@ -5,3 +5,4 @@ class DiceSet
 	  @values = Array.new(num_dice) { rand(1..6) }
 	end
   end
+  
