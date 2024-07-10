@@ -1,53 +1,71 @@
 require_relative 'player'
+require_relative 'roll'
+require_relative 'turn'
 
 class Game
-  FINAL_SCORE = 3000
+	attr_accessor :players
 
-  def initialize(player_names)
-    @players = player_names.map { |name| Player.new(name) }
-    @final_round = false
-    @final_round_players = []
-  end
+	def initialize(no_of_players)
+		@players = []
+		@final_round = false
 
-  def play
-    until @final_round
-      @players.each do |player|
-        break if @final_round
+		no_of_players.times do |i|
+			@players << Player.new(i)
+		end
+	end
 
-        puts "#{player.name}'s turn"
-        turn_score = player.take_turn
+	def start()
 
-        if turn_score > 0
-          player.score += turn_score
-          puts "#{player.name} scored #{turn_score} points this turn. Total score: #{player.score}"
-        else
-          puts "#{player.name} scored 0 points and lost their turn."
-        end
+		puts "Starting game.\n\n"
 
-        if player.score >= FINAL_SCORE
-          @final_round = true
-          @final_round_players = @players.reject { |p| p == player }
-          @final_round_players << player
-          puts "#{player.name} has reached #{FINAL_SCORE} points! Final round begins!"
-          break
-        end
-      end
-    end
+		while(!@final_round)
+			@players.each do |player|
+				play_turn(player)
 
-    final_turns
-    declare_winner
-  end
+				if player.score >= 3000
+					@final_round = true 
+					break
+				end
+			end
+		end
 
-  def declare_winner
-    winner = @players.max_by(&:score)
-    puts "The winner is #{winner.name} with #{winner.score} points!"
-  end
+		#final round
+		puts "Going into the final round\n\n"
+		@players.each do |player|
+			play_turn(player)
+		end
+
+		#final scores
+		print_final_scores()
+		puts "Game ended."
+	end
+
+	private
+
+	def play_turn(player)
+		puts "***********START TURN****************"
+		puts "#{player.to_s}\n"
+
+		turn = Turn.new(player)
+		turn.start()
+
+		puts "Turn score is #{turn.score}\n"
+		puts "#{player.to_s}\n"
+		puts "***********END TURN****************\n\n"
+
+		puts "Press enter key to continue\n"
+		gets()			
+	end
+
+	def print_final_scores
+		@players.each do |player|
+			puts "Player #{player.id} final score is #{player.score}"
+		end
+	end
+
 end
 
-if __FILE__ == $0
-  puts "Welcome to the Greed game!"
-  print "Enter player names separated by commas: "
-  player_names = gets.chomp.split(',').map(&:strip)
-  game = Game.new(player_names)
-  game.play
-end
+puts "Enter number of players for the new game:"
+no_of_players = gets().chomp().to_i
+Game.new(no_of_players).start()
+
