@@ -1,0 +1,28 @@
+manavtanna@SetupUser Downloads % grep "Completed" ./tmp_more_than_50\ \(1\) | sort -k5,5nr | head -1
+13613474:prod9.browserstack.com/2015-06-10/home/app/railsApp/shared/log/production.log:2219249:Completed 200 OK in 161364ms (Views: 2.6ms | ActiveRecord: 161351.4ms | Sphinx: 0.0ms)
+manavtanna@SetupUser Downloads % grep "Started" ./tmp_more_than_50\ \(1\) | cut -d'"' -f2 | cut -d'?' -f1 | sort | uniq -c
+3 /admin/automation_stats
+   1 /admin/blacklist_and_block_ip
+   1 /admin/run_query
+   2 /admin/user_search
+   2 /automate
+   1 /automate/2f791dca945ec933e1131cbd29f2623ba28fa5c7/error_logs
+   1 /automate/8c7560d37c308befea72bea54db5253b9a2fbe50/error_logs
+   1 /automate/9d1f22d3e2df4170283248234c7ba39618a02d42/error_logs
+   1 /automate/a8c63b75a162f98506c8563f6dc58ea636e7f53a/error_logs
+   1 /automate/builds/71652f6a4b5270fbf9c1fd727d169df78a60e173/sessions/2f791dca945ec933e1131cbd29f2623ba28fa5c7
+   1 /automate/builds/71652f6a4b5270fbf9c1fd727d169df78a60e173/sessions/a47b4d1c2fb984695035fff62a74d83b170884df
+   1 /automate/dashboard_update/28032107/new
+   1 /automate/dashboard_update/28090539/new
+   1 /automate/dashboard_update/28091011/new
+   1 /automate/dashboard_update/28105389/new
+   2 /main/sns_data
+  18 /proxy/port
+  13 /terminal/find_session_id
+   5 /terminal/is_on
+   3 /terminal/start
+   2 /terminal/stop
+   1 /terminal/update_time
+  14 /user/disconnect_tunnel
+   1 /user/features_seen
+   1 /user/onboarded
